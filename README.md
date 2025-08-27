@@ -1,5 +1,5 @@
-# Portfolio
+# My Portfolio
 
-Software Engineer with expertise in AI/ML and full-stack development. Bilingual (English/Spanish) graduate from Ontario Tech University with 5+ years coding experience.
+Personal portfolio website showcasing my software engineering projects and skills. Features my work in AI, machine learning, full-stack development, and UI/UX design.
 
 **[View Live Portfolio](https://hamzifarhat-portfolio.vercel.app)**
