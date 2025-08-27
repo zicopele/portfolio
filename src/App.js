@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, createContext, useContext } from 'react';
 import { 
   Github, 
   Linkedin, 
@@ -11,12 +11,229 @@ import {
   Target,
   GraduationCap,
   Menu,
-  X
+  X,
+  Languages
 } from 'lucide-react';
+
+// Language Context
+const LanguageContext = createContext();
+
+const useLanguage = () => {
+  const context = useContext(LanguageContext);
+  if (!context) {
+    throw new Error('useLanguage must be used within a LanguageProvider');
+  }
+  return context;
+};
+
+// Translations
+const translations = {
+  es: {
+    // Navigation
+    portfolio: "Portafolio",
+    hero: "inicio",
+    about: "acerca",
+    skills: "habilidades", 
+    projects: "proyectos",
+    experience: "experiencia",
+    contact: "contacto",
+    
+    // Hero Section
+    title: "Ingeniero de Software • Desarrollador Full Stack • Aspirante a Diseñador UI/UX",
+    heroDescription: "Graduado en Ingeniería de Software apasionado por IA, aprendizaje automático, y expandirse hacia el diseño UI/UX para crear hermosas experiencias de usuario a través del desarrollo web moderno.",
+    viewMyWork: "Ver Mi Trabajo",
+    getInTouch: "Contactar",
+    
+    // About Section
+    aboutMe: "Sobre Mí",
+    myJourney: "Mi Trayectoria",
+    aboutDescription1: "Soy graduado en Ingeniería de Software de Ontario Tech University con pasión por la inteligencia artificial, aprendizaje automático, y creación de experiencias de usuario excepcionales. Mi trayectoria en tecnología abarca desde desarrollo de IA backend hasta desarrollo frontend, y me estoy expandiendo activamente hacia el diseño UI/UX para construir soluciones integrales que sean poderosas y hermosas.",
+    aboutDescription2: "Con experiencia en soporte de TI, liderazgo estudiantil, y varios proyectos técnicos, aporto tanto experiencia técnica como creciente interés en principios de diseño a cada desafío. Estoy particularmente interesado en visión por computadora, procesamiento de lenguaje natural, y aprender a crear interfaces de usuario intuitivas que hagan la tecnología compleja accesible para todos.",
+    location: "Ubicación",
+    status: "Estado",
+    graduateStatus: "Graduado en Ingeniería de Software",
+    ageLanguages: "Edad e Idiomas",
+    ageLanguagesValue: "22 • Bilingüe (Inglés/Español)",
+    codingExperience: "Experiencia",
+    codingExperienceValue: "5+ Años Programando",
+    whatIDo: "Lo Que Hago",
+    aiDevelopment: "Desarrollo de IA y Aprendizaje Automático",
+    fullStackDev: "Desarrollo Web Full Stack",
+    uiuxDesign: "Diseño UI/UX y Desarrollo Frontend (Aprendiendo)",
+    distributedSystems: "Diseño de Sistemas Distribuidos",
+    developmentFocus: "Enfoque de Diseño y Desarrollo",
+    computerVision: "Visión por Computadora e IA",
+    uiuxPrototyping: "Diseño UI/UX y Prototipado",
+    nlp: "Procesamiento de Lenguaje Natural",
+    frontendDesign: "Frontend y Diseño Web",
+    databaseManagement: "Gestión de Bases de Datos",
+    education: "Educación",
+    ontarioTech: "Ontario Tech University",
+    softwareEngineering: "Licenciatura en Ingeniería de Software",
+    ontarioTechYears: "2021 - 2025 (Graduado) | Oshawa, ON",
+    caribbeanSchool: "Caribbean International School",
+    bilingualBachelor: "Licenciatura Bilingüe en Ciencias y Humanidades",
+    bilingualCert: "Certificación Bilingüe en Comercio",
+    caribbeanYears: "2008 - 2021 | Colón, Panamá",
+    
+    // Skills Section
+    skillsExpertise: "Habilidades y Experiencia",
+    language: "Lenguaje",
+    frontend: "Frontend", 
+    design: "Diseño",
+    proficiency: "Competencia",
+    downloadResume: "Descargar CV (PDF)",
+    portfolioSummary: "Resumen del Portafolio",
+    
+    // Projects Section
+    featuredProjects: "Proyectos Destacados",
+    invasiveSpecies: "IA de Detección de Especies Invasivas",
+    invasiveDescription: "Desarrollé y entrené un modelo de aprendizaje profundo YOLOv5 para detectar especies invasivas en imágenes y videos con alta precisión. Integré técnicas de visión por computadora para clasificación y seguimiento.",
+    languageLearning: "IA Compañera de Aprendizaje de Idiomas",
+    languageDescription: "Plataforma de aprendizaje interactiva potenciada por OpenAI con lecciones interactivas, romanización, traducción y funciones de texto a voz para mejorar el compromiso del usuario.",
+    musicLibrary: "Biblioteca de Música Distribuida",
+    musicDescription: "Sistema distribuido para gestionar y transmitir archivos de música a través de múltiples nodos usando Java RMI y programación de sockets con replicación de archivos y tolerancia a fallos.",
+    liveDemo: "Demo en Vivo",
+    code: "Código",
+    live: "En Vivo",
+    
+    // Experience Section
+    experienceTitle: "Experiencia",
+    itSupport: "Soporte de TI",
+    itCompany: "Caribbean International School",
+    itPeriod: "Mayo 2024 - Sep 2024",
+    itDescription: "Proporcioné soporte técnico integral para problemas de hardware, software y redes en toda la escuela. Realicé mantenimiento rutinario del sistema, actualizaciones de software y apoyé procesos de incorporación/desvinculación.",
+    studentLeader: "Líder Estudiantil Internacional",
+    leaderCompany: "Ontario Tech University", 
+    leaderPeriod: "Mayo 2023 - Sep 2023",
+    leaderDescription: "Orienté a nuevos estudiantes internacionales, facilité sesiones de orientación, recorridos del campus y talleres culturales para promover el compromiso estudiantil e inclusión.",
+    salesAssociate: "Asociado de Ventas",
+    salesCompany: "Las Vegas S.A.",
+    salesPeriod: "Mayo 2020 - Ago 2020",
+    salesDescription: "Asociado de ventas altamente motivado con amplia experiencia en servicio al cliente y ventas. Mantuve la presentación de mercancía para maximizar el atractivo comercial y los ingresos.",
+    
+    // Contact Section
+    workTogether: "Trabajemos Juntos",
+    contactDescription: "¿Listo para dar vida a tus ideas? Hablemos sobre tu próximo proyecto.",
+    email: "Correo",
+    
+    // Footer
+    footer: "© 2024 Hamzi Farhat. Construido con React y pasión por la innovación"
+  },
+  en: {
+    // Navigation
+    portfolio: "Portfolio",
+    hero: "hero",
+    about: "about",
+    skills: "skills",
+    projects: "projects", 
+    experience: "experience",
+    contact: "contact",
+    
+    // Hero Section
+    title: "Software Engineer • Full Stack Developer • Aspiring UI/UX Designer",
+    heroDescription: "Software Engineering graduate passionate about AI, machine learning, and expanding into UI/UX design to create beautiful user experiences through modern web development.",
+    viewMyWork: "View My Work",
+    getInTouch: "Get In Touch",
+    
+    // About Section
+    aboutMe: "About Me",
+    myJourney: "My Journey",
+    aboutDescription1: "I'm a Software Engineering graduate from Ontario Tech University with a passion for artificial intelligence, machine learning, and creating exceptional user experiences. My journey in technology spans from backend AI development to frontend development, and I'm actively expanding into UI/UX design to build comprehensive solutions that are both powerful and beautiful.",
+    aboutDescription2: "With experience in IT support, student leadership, and various technical projects, I bring both technical expertise and a growing interest in design principles to every challenge. I'm particularly interested in computer vision, natural language processing, and learning to craft intuitive user interfaces that make complex technology accessible to everyone.",
+    location: "Location",
+    status: "Status", 
+    graduateStatus: "Software Engineering Graduate",
+    ageLanguages: "Age & Languages",
+    ageLanguagesValue: "22 • Bilingual (English/Spanish)",
+    codingExperience: "Experience",
+    codingExperienceValue: "5+ Years Coding",
+    whatIDo: "What I Do",
+    aiDevelopment: "AI & Machine Learning Development",
+    fullStackDev: "Full Stack Web Development",
+    uiuxDesign: "UI/UX Design & Frontend Development (Learning)",
+    distributedSystems: "Distributed Systems Design",
+    developmentFocus: "Design & Development Focus",
+    computerVision: "Computer Vision & AI",
+    uiuxPrototyping: "UI/UX Design & Prototyping",
+    nlp: "Natural Language Processing",
+    frontendDesign: "Frontend & Web Design",
+    databaseManagement: "Database Management",
+    education: "Education",
+    ontarioTech: "Ontario Tech University",
+    softwareEngineering: "Bachelor of Engineering in Software Engineering",
+    ontarioTechYears: "2021 - 2025 (Graduated) | Oshawa, ON",
+    caribbeanSchool: "Caribbean International School",
+    bilingualBachelor: "Bilingual Bachelor in Science and Humanities",
+    bilingualCert: "Bilingual Certification in Commerce", 
+    caribbeanYears: "2008 - 2021 | Colón, Panama",
+    
+    // Skills Section
+    skillsExpertise: "Skills & Expertise",
+    language: "Language",
+    frontend: "Frontend",
+    design: "Design", 
+    proficiency: "Proficiency",
+    downloadResume: "Download Resume (PDF)",
+    portfolioSummary: "Portfolio Summary",
+    
+    // Projects Section
+    featuredProjects: "Featured Projects",
+    invasiveSpecies: "Invasive Species Detection AI",
+    invasiveDescription: "Developed and trained a YOLOv5 deep learning model to detect invasive species in images and video feeds with high accuracy. Integrated computer vision techniques for classification and tracking.",
+    languageLearning: "Language Learning Companion AI",
+    languageDescription: "AI-powered language learning companion using OpenAI with interactive lessons, romanization, translation, and text-to-speech functions for enhanced user engagement.",
+    musicLibrary: "Distributed Music Library",
+    musicDescription: "Distributed system to manage and stream music files across multiple nodes using Java RMI and socket programming with file replication and fault tolerance.",
+    liveDemo: "Live Demo",
+    code: "Code",
+    live: "Live",
+    
+    // Experience Section
+    experienceTitle: "Experience", 
+    itSupport: "IT Support",
+    itCompany: "Caribbean International School",
+    itPeriod: "May 2024 - Sep 2024",
+    itDescription: "Provided technical support for hardware, software, and networking issues across the school. Performed routine system maintenance, software updates, and supported onboarding/offboarding processes.",
+    studentLeader: "International Student Leader",
+    leaderCompany: "Ontario Tech University",
+    leaderPeriod: "May 2023 - Sep 2023", 
+    leaderDescription: "Mentored new international students, facilitated orientation sessions, campus tours, and cultural workshops to promote student engagement and inclusion.",
+    salesAssociate: "Sales Associate",
+    salesCompany: "Las Vegas S.A.",
+    salesPeriod: "May 2020 - Aug 2020",
+    salesDescription: "Highly motivated sales associate with extensive customer service and sales experience. Maintained merchandise presentation to maximize business appeal and revenue.",
+    
+    // Contact Section
+    workTogether: "Let's Work Together", 
+    contactDescription: "Ready to bring your ideas to life? Let's discuss your next project.",
+    email: "Email",
+    
+    // Footer
+    footer: "© 2024 Hamzi Farhat. Built with React and passion for innovation"
+  }
+};
+
+const LanguageProvider = ({ children }) => {
+  const [language, setLanguage] = useState('es'); // Default to Spanish
+  
+  const t = (key) => translations[language][key] || key;
+  
+  const toggleLanguage = () => {
+    setLanguage(prev => prev === 'es' ? 'en' : 'es');
+  };
+  
+  return (
+    <LanguageContext.Provider value={{ language, t, toggleLanguage }}>
+      {children}
+    </LanguageContext.Provider>
+  );
+};
 
 const Portfolio = () => {
   const [activeSection, setActiveSection] = useState('hero');
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const { language, t, toggleLanguage } = useLanguage();
 
   const skills = [
     { name: 'Python', level: 92, category: 'Language' },
@@ -246,10 +463,10 @@ const Portfolio = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center py-4">
             <div className="text-2xl font-bold bg-gradient-to-r from-amber-200 to-stone-200 bg-clip-text text-transparent">
-              Portfolio
+              {t('portfolio')}
             </div>
             
-            <div className="hidden md:flex space-x-8">
+            <div className="hidden md:flex items-center space-x-8">
               {['hero', 'about', 'skills', 'projects', 'experience', 'contact'].map((section) => (
                 <button
                   key={section}
@@ -258,9 +475,18 @@ const Portfolio = () => {
                     activeSection === section ? 'text-amber-200' : 'text-neutral-300'
                   }`}
                 >
-                  {section}
+                  {t(section)}
                 </button>
               ))}
+              
+              <button
+                onClick={toggleLanguage}
+                className="flex items-center gap-2 text-neutral-300 hover:text-amber-200 transition-colors"
+                title={language === 'es' ? 'Cambiar a inglés' : 'Switch to Spanish'}
+              >
+                <Languages className="w-4 h-4" />
+                <span className="text-sm font-medium">{language.toUpperCase()}</span>
+              </button>
             </div>
 
             <button
@@ -281,9 +507,16 @@ const Portfolio = () => {
                   onClick={() => scrollToSection(section)}
                   className="capitalize block px-3 py-2 text-neutral-300 hover:text-amber-200 w-full text-left"
                 >
-                  {section}
+                  {t(section)}
                 </button>
               ))}
+              <button
+                onClick={toggleLanguage}
+                className="flex items-center gap-2 px-3 py-2 text-neutral-300 hover:text-amber-200 transition-colors"
+              >
+                <Languages className="w-4 h-4" />
+                <span className="text-sm">{language === 'es' ? 'English' : 'Español'}</span>
+              </button>
             </div>
           </div>
         )}
@@ -306,11 +539,10 @@ const Portfolio = () => {
               </span>
             </h1>
             <h2 className="text-xl md:text-2xl text-neutral-300 mb-6 font-medium">
-              Software Engineer • Full Stack Developer • Aspiring UI/UX Designer
+              {t('title')}
             </h2>
             <p className="text-lg text-neutral-400 max-w-2xl mx-auto mb-8 font-light leading-relaxed">
-              Software Engineering graduate passionate about AI, machine learning, and expanding into 
-              UI/UX design to create beautiful user experiences through modern web development.
+              {t('heroDescription')}
             </p>
           </div>
           
@@ -319,13 +551,13 @@ const Portfolio = () => {
               onClick={() => scrollToSection('projects')}
               className="bg-gradient-to-r from-amber-700 to-stone-700 px-8 py-4 rounded-full font-semibold hover:shadow-lg hover:shadow-amber-900/25 transition-all duration-300 flex items-center justify-center gap-2"
             >
-              View My Work <ChevronRight className="w-5 h-5" />
+              {t('viewMyWork')} <ChevronRight className="w-5 h-5" />
             </button>
             <button 
               onClick={() => scrollToSection('contact')}
               className="border border-amber-600 px-8 py-4 rounded-full font-semibold hover:bg-amber-600/10 transition-all duration-300 flex items-center justify-center gap-2"
             >
-              Get In Touch <Mail className="w-5 h-5" />
+              {t('getInTouch')} <Mail className="w-5 h-5" />
             </button>
           </div>
 
@@ -632,4 +864,10 @@ const Portfolio = () => {
   );
 };
 
-export default Portfolio;
+const App = () => (
+  <LanguageProvider>
+    <Portfolio />
+  </LanguageProvider>
+);
+
+export default App;
