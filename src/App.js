@@ -448,8 +448,8 @@ Caribbean International School (2008-2021)`;
           
           <div className="mt-16 text-center flex flex-col sm:flex-row gap-4 justify-center">
             <a
-              href="/Hamzi Farhat Resume.pdf"
-              download="Hamzi_Farhat_Resume.pdf"
+              href={language === 'es' ? "/Hamzi Farhat Ingeniero de Sistemas CV.pdf" : "/Hamzi Farhat Software Engineer CV.pdf"}
+              download={language === 'es' ? "Hamzi Farhat Ingeniero de Sistemas CV.pdf" : "Hamzi Farhat Software Engineer CV.pdf"}
               className="bg-gradient-to-r from-amber-700 to-stone-700 px-8 py-3 rounded-full font-semibold hover:shadow-lg hover:shadow-amber-900/25 transition-all duration-300 flex items-center justify-center gap-2 mx-auto sm:mx-0 inline-flex"
             >
               <Download className="w-5 h-5" />
