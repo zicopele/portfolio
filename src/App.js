@@ -687,6 +687,26 @@ Caribbean International School (2008-2021)`;
                 }
               </p>
             </div>
+        <div className="space-y-8">
+            <div className="bg-gradient-to-r from-stone-800/30 to-neutral-700/30 p-6 rounded-xl border border-stone-600/30">
+              <div className="flex flex-col md:flex-row md:items-center justify-between mb-4">
+                <div>
+                  <h3 className="text-xl font-semibold text-amber-200">
+                    {language === 'es' ? 'Soporte de Plataforma Interactiva Maritimas' : 'Maritime Interactive Platform Support'}
+                  </h3>
+                  <h4 className="text-lg text-neutral-300 font-medium">AFS Industial Inc.</h4>
+                </div>
+                <span className="text-neutral-400 mt-2 md:mt-0 font-light">
+                  {language === 'es' ? 'Ene 2025 - Sep 2025' : 'Jan 2025 - Sep 2025'}
+                </span>
+              </div>
+              <p className="text-neutral-300 font-light leading-relaxed">
+                {language === 'es'
+                  ? 'Administración, desarrollo e implementación de bots de automatización basados en IA para optimizar procesos, mejorar la eficiencia operativa y brindar soporte técnico a usuarios.'
+                  : 'Administration, development, and implementation of AI-based automation bots to optimize processes, improve operational efficiency, and provide technical support to users.'
+                }
+              </p>
+            </div>
           </div>
         </div>
       </section>
