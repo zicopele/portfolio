@@ -687,7 +687,6 @@ Caribbean International School (2008-2021)`;
                 }
               </p>
             </div>
-        <div className="space-y-8">
             <div className="bg-gradient-to-r from-stone-800/30 to-neutral-700/30 p-6 rounded-xl border border-stone-600/30">
               <div className="flex flex-col md:flex-row md:items-center justify-between mb-4">
                 <div>
